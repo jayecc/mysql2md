@@ -5,7 +5,7 @@ This is a simple tool to convert mysql database to markdown.
 ## Install
 
 ```bash
-go install -u github.com/jayecc/mysql2md
+go install github.com/jayecc/mysql2md@latest
 ```
 
 ## Usage
