@@ -13,6 +13,7 @@ import (
 	"log"
 	"os"
 	"runtime"
+	"strings"
 )
 
 var (
@@ -113,7 +114,7 @@ func tableListToFile(databaseName string, tables []Table) (err error) {
 	_, _ = f.WriteString("| ---- | ------ | ----------- | --------- | ------- |\n")
 
 	for _, table := range tables {
-		_, _ = f.WriteString(fmt.Sprintf("| [%s](%s.%s.md) | %s | %s | %s | `%s` |\n", table.Name, databaseName, table.Name, table.Engine, table.CreateTime, table.Collation, table.Comment))
+		_, _ = f.WriteString(fmt.Sprintf("| [%s](%s.%s.md) | %s | %s | %s | `%s` |\n", table.Name, databaseName, table.Name, table.Engine, table.CreateTime, table.Collation, strings.ReplaceAll(table.Comment, "\n", "")))
 	}
 
 	return
@@ -133,7 +134,7 @@ func tableToFile(databaseName string, table Table, columns []TableColumn, ddl *T
 	_, _ = f.WriteString("| ----------- | -------------- | ----------- | -------------- | ----------- | ---------- | ----- | -------------- |\n")
 
 	for _, column := range columns {
-		_, _ = f.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s | `%s` |\n", column.ColumnName, column.ColumnDefault, column.IsNullable, column.CollationName, column.ColumnType, column.ColumnKey, column.Extra, column.ColumnComment))
+		_, _ = f.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s | `%s` |\n", column.ColumnName, column.ColumnDefault, column.IsNullable, column.CollationName, column.ColumnType, column.ColumnKey, column.Extra, strings.ReplaceAll(column.ColumnComment, "\n", "")))
 	}
 
 	if !*isDDL {
@@ -175,7 +176,7 @@ func wholeToFile(databaseName string, tables []Table) (err error) {
 			_, _ = f.WriteString("| ----------- | -------------- | ----------- | -------------- | ----------- | ---------- | ----- | -------------- |\n")
 
 			for _, column := range columns {
-				_, _ = f.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s | `%s` |\n", column.ColumnName, column.ColumnDefault, column.IsNullable, column.CollationName, column.ColumnType, column.ColumnKey, column.Extra, column.ColumnComment))
+				_, _ = f.WriteString(fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s | `%s` |\n", column.ColumnName, column.ColumnDefault, column.IsNullable, column.CollationName, column.ColumnType, column.ColumnKey, column.Extra, strings.ReplaceAll(column.ColumnComment, "\n", "")))
 			}
 
 			defer bar.Add(1)
