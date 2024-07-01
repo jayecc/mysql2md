@@ -97,7 +97,7 @@ func tableColumns(databaseName, tableName string) (columns []TableColumn, err er
 
 func tableDDL(tableName string) (ddl *TableDDL, err error) {
 	ddl = &TableDDL{}
-	err = db.Raw("SHOW CREATE TABLE " + tableName).Scan(ddl).Error
+	err = db.Raw(fmt.Sprintf("SHOW CREATE TABLE `%s`", tableName)).Scan(ddl).Error
 	return
 }
 
